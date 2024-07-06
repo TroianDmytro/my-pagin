@@ -1,24 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
+import Pagination, { axiosDataNomer, axiosDataVin } from './components/Pagination/Pagination';
+import { useState } from 'react';
+import SearchLine from './components/SearchLine/SearchLine';
 
 function App() {
+  const [auto, setAuto] = useState([]);
+  const [search,setSearch]= useState("");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <SearchLine title={"номеру"} seter={setAuto} searchFunc={axiosDataNomer}/>
+      <SearchLine title={"VIN"} seter={setAuto} searchFunc={axiosDataVin}/>
+      <Pagination listItem={auto} />
+    </>
   );
 }
 
