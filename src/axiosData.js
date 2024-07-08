@@ -5,13 +5,16 @@ import React from "react";
 const axiosData = async (item, typeOperation) => {
     let url = '';
     if (typeOperation === "номер") {
+        console.log("if nomer");
         url = `https://baza-gai.com.ua/nomer/${item.toUpperCase()}`
     }
     else if (typeOperation === "vin") {
+        console.log("if vin");
         url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`
     }
     else if (typeOperation === "модель") {
-        url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`
+        console.log("if model");
+        url = `https://baza-gai.com.ua/make/lamborghini/huracan`;
     }
     else if (typeOperation === "регіон") {
         url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`
