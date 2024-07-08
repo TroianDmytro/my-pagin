@@ -22,6 +22,10 @@ const axiosData = async (url) => {
       data.operations = data.operations.map(item => item = { ...item, digits: data.digits });
       data.operations[0] = ({ ...data.operations[0], vin: data.vin });
       data.operations[0] = ({ ...data.operations[0], photo_url: data.photo_url });
+      data.operations[0] = ({ ...data.operations[0], region: data.region.slug });
+      
+      console.log("data",data);
+      console.log("data.operations",data.operations);
       return data.operations // Возвращаем данные
 
    } catch (error) {
@@ -45,10 +49,6 @@ const Pagination = (props) => {
    const renderChildren = list => {
       return list.map((item, index) => {
 
-         const styled = {
-            display: "flex",
-            alignItem: "start",
-         }
          return (item &&
             <Card key={index} style={{ width: '30rem', fontWeight: "600", fontSize: "20px" }} className='border border-2 border-success mb-2'>
                <Card.Img variant="top" src={item.photo_url} />
