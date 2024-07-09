@@ -48,27 +48,25 @@ const Pagination = (props) => {
          ]
 
          const styleCard = {
-            width: '30rem',
+            maxWidth: '30rem',
             fontWeight: "600",
-            fontSize: "20px"
+            fontSize: "20px",
          };
 
-         console.log("variantModel", variantModel);
-         console.log("fieldModel", fieldModel);
-         if (variantModel) {
+         if (variantModel) { 
             return (
                <Card key={index} style={styleCard} className='border border-2 border-success mb-2'>
                   <Card.Img variant="top" src={item.catalog_model?.photo_url} />
-                  <Card.Body>
-                     <Card.Title>{fieldModel[0].value}</Card.Title>
-                     <Card.Text style={{ textAlign: "start" }}>
+                  <Card.Body >
+                     <Card.Title >{fieldModel[0].value}</Card.Title>
+                     <Card.Text style={{ textAlign: "start"}}>
                         <ListGroup variant="flush">
                            {fieldModel.map((field, idx) => (
-                              <ListGroup.Item key={idx}>{field.label}: {field.value}</ListGroup.Item>
+                              field.length > 0 && <ListGroup.Item key={idx} >{field.label}: {field.value}</ListGroup.Item>
                            ))}
                         </ListGroup>
                      </Card.Text>
-                     <Button variant="primary" onClick={handleToggle}>
+                     <Button variant="primary" onClick={handleToggle} >
                         {showFull ? "Приховати" : "Показати все"}
                      </Button>
                   </Card.Body>
@@ -76,7 +74,8 @@ const Pagination = (props) => {
             );
          }
          else {
-            return (<Card>
+            return (
+            <Card key={index} style={styleCard} className='border border-2 border-success mb-2'>
                <Card.Img variant="top" src={item.photo_url} />
                <Card.Body>
                   <Card.Title>{item.vendor} {item.model}</Card.Title>
@@ -87,7 +86,7 @@ const Pagination = (props) => {
                         ))}
                      </ListGroup>
                   </Card.Text>
-                  <Button variant="primary" onClick={handleToggle}>
+                  <Button variant="success" onClick={handleToggle} style={{color:"black",fontWeight:"600"}}>
                      {showFull ? "Приховати" : "Показати все"}
                   </Button>
                </Card.Body>
@@ -99,9 +98,8 @@ const Pagination = (props) => {
 
    const CURRENT_PAGE_INDEX = 0;
    return (
-      <PaginationWrapper>
-         <div style={{ fontFamily: 'sans-serif', textAlign: 'center' }}>
-            <P
+      <PaginationWrapper style={{ fontFamily: 'sans-serif', textAlign: 'center' }}>
+            <P 
                list={props.listItem}
                itemsPerPage={1}
                currentPageIndex={CURRENT_PAGE_INDEX}
@@ -111,7 +109,6 @@ const Pagination = (props) => {
                useDefaultStyles
             // showCounter
             />
-         </div>
       </PaginationWrapper>
    );
 }

@@ -10,11 +10,11 @@ function App() {
   // const [search, setSearch] = useState("");
 
   return (
-    <>
+    <div className='App'>
       <SearchLine seterAuto={setAuto} seterTypeCard={setTypeCard} />
       <Pagination listItem={auto} variantCard={typeCard} />
       <MapUA region={auto[0]?.region} />
-    </>
+    </div>
   );
 }
 
