@@ -38,6 +38,9 @@ const UkraineMap = (props) => {
                obj[key] = newValue;
                updated = true; // Найдено и значение изменено
             }
+            else{
+               obj[key]="blue";
+            }
          }
       }
       return updated; // Возвращает true, если хотя бы одно значение было изменено
