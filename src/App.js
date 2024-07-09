@@ -1,21 +1,20 @@
 import './App.css';
-import Pagination, { axiosDataNomer, axiosDataVin } from './components/Pagination/Pagination';
+import Pagination from './components/Pagination/Pagination';
 import { useState } from 'react';
 import SearchLine from './components/SearchLine/SearchLine';
 import MapUA from './components/MapUA/MapUA';
 
 function App() {
   const [auto, setAuto] = useState([]);
-  const [search,setSearch]= useState("");
+  const [ typeCard, setTypeCard] = useState("номер");
+  // const [search, setSearch] = useState("");
 
   return (
     <>
-      <SearchLine title={"номеру"} seter={setAuto} searchFunc={axiosDataNomer}/>
-      <SearchLine title={"VIN"} seter={setAuto} searchFunc={axiosDataVin}/>
-      <Pagination listItem={auto} />
-      <MapUA region = {auto[0]?.region}/>
+      <SearchLine seterAuto={setAuto} seterTypeCard={setTypeCard} />
+      <Pagination listItem={auto} variantCard={typeCard} />
+      <MapUA region={auto[0]?.region} />
     </>
   );
 }
-
 export default App;
