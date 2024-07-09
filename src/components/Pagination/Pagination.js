@@ -4,61 +4,27 @@ import { PaginationWrapper } from './Pagination.styled';
 import P from 'react-pagimagic';
 import axios from 'axios';
 import { Button, Card, ListGroup } from 'react-bootstrap';
-
+import axiosData from "../../axiosData";
 // XTA210990X2412023
-
-const axiosData = async (url) => {
-
-   const key = "b58b989505dc6b035c5ee1739a12f057";
-   try {
-      const response = await axios.get(url, {
-         headers: {
-            "Accept": "application/json",
-            "X-Api-Key": key,
-         },
-      });
-      const data = response.data;
-      ///////////////////////////////////////////////////////
-      data.operations = data.operations.map(item => item = { ...item, digits: data.digits });
-      data.operations[0] = ({ ...data.operations[0], vin: data.vin });
-      data.operations[0] = ({ ...data.operations[0], photo_url: data.photo_url });
-      data.operations[0] = ({ ...data.operations[0], region: data.region.slug });
-      
-      console.log("data",data);
-      console.log("data.operations",data.operations);
-      return data.operations // Возвращаем данные
-
-   } catch (error) {
-      console.error("Error fetching data: ", error);
-      return null; // В случае ошибки возвращаем null
-   }
-}
-
-export const axiosDataNomer = async (item) => {
-   const url = `https://baza-gai.com.ua/nomer/${item.toUpperCase()}`;
-   return await axiosData(url);
-};
-
-export const axiosDataVin = async (item) => {
-   const url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`;
-   return await axiosData(url);
-};
-
 
 const Pagination = (props) => {
    const renderChildren = list => {
+      const styleCard = {
+         width: '30rem',
+         fontWeight: "600",
+         fontSize: "20px"
+      };
       return list.map((item, index) => {
 
          return (item &&
-            <Card key={index} style={{ width: '30rem', fontWeight: "600", fontSize: "20px" }} className='border border-2 border-success mb-2'>
+            <Card key={index} style={styleCard} className='border border-2 border-success mb-2'>
                <Card.Img variant="top" src={item.photo_url} />
                <Card.Body>
                   <Card.Title>{item.vendor} {item.model}</Card.Title>
                   <Card.Text style={{ textAlign: "start" }}>
                      <ListGroup variant="flush" >
-                        <ListGroup.Item>Номер: {item.digits||"----------"}</ListGroup.Item>
+                        <ListGroup.Item>Номер: {item.digits || "----------"}</ListGroup.Item>
                         <ListGroup.Item>VIN: {item.vin || "**************"}</ListGroup.Item>
-                        {/* {item.is_stolen && <ListGroup.Item>В розшуку: {item.is_stolen ? "Так" : "Ні"}</ListGroup.Item> } */}
                         <ListGroup.Item>Реестрація: {item.address} </ListGroup.Item>
                         <ListGroup.Item>Дата реестрації: {item.registered_at} </ListGroup.Item>
                         <ListGroup.Item>Операція: {item.operation.ua}</ListGroup.Item>
@@ -77,7 +43,6 @@ const Pagination = (props) => {
       });
    };
    const CURRENT_PAGE_INDEX = 0;
-
    return (
       <PaginationWrapper>
          <div style={{ fontFamily: 'sans-serif', textAlign: 'center' }}>
@@ -86,19 +51,14 @@ const Pagination = (props) => {
                itemsPerPage={1}
                currentPageIndex={CURRENT_PAGE_INDEX}
                className="your-class-if-its-necessary"
-               maximumVisiblePaginators={3}
+               maximumVisiblePaginators={6}
                renderChildren={renderChildren}
                useDefaultStyles
-               showCounter
+            // showCounter
             />
          </div>
       </PaginationWrapper>
    );
-
 }
-
-
 Pagination.propTypes = {};
-
-
 export default Pagination;
