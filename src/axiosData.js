@@ -1,20 +1,20 @@
-import { type } from "@testing-library/user-event/dist/type";
 import axios from "axios";
-import React from "react";
 
 const axiosData = async (item, typeOperation) => {
     let url = '';
     if (typeOperation === "номер") {
-        url = `https://baza-gai.com.ua/nomer/${item.toUpperCase()}`
+        url = `https://baza-gai.com.ua/nomer/${item.toUpperCase()}`;
     }
     else if (typeOperation === "vin") {
-        url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`
+        url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`;
     }
     else if (typeOperation === "модель") {
-        url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`
+        const arrayModel = item.split(" ")
+        console.log(`https://baza-gai.com.ua/make/${arrayModel[0].toLowerCase()}/${arrayModel[1].toLowerCase()}`);
+        url = `https://baza-gai.com.ua/make/${arrayModel[0].toLowerCase()}/${arrayModel[1].toLowerCase()}`;
     }
     else if (typeOperation === "регіон") {
-        url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`
+        url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`;
     }
 
 
@@ -26,7 +26,14 @@ const axiosData = async (item, typeOperation) => {
                 "X-Api-Key": key,
             },
         });
+
         const data = response.data;
+
+        if(typeOperation === "модель"){
+            console.log("data",data);
+            return [data];
+        }
+
         ///////////////////////////////////////////////////////
         data.operations = data.operations.map(item => item = { ...item, digits: data.digits });
         data.operations[0] = ({ ...data.operations[0], vin: data.vin });
@@ -38,19 +45,10 @@ const axiosData = async (item, typeOperation) => {
         return data.operations // Возвращаем данные
 
     } catch (error) {
-        console.error("Error fetching data: ", error);
-        return null; // В случае ошибки возвращаем null
+        alert(`Error fetching data:${error} `, error);
+        
+        return axiosData("KA0007XB","номер"); // В случае ошибки возвращаем null
     }
 }
-
-// export const axiosDataNomer = async (item) => {
-//     const url = ;
-//     return await axiosData(url);
-// };
-
-// export const axiosDataVin = async (item) => {
-//     const ;
-//     return await axiosData(url);
-// };
 
 export default axiosData;
