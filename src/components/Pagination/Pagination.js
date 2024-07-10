@@ -2,115 +2,129 @@ import React, { useEffect, useState } from 'react';
 import { PaginationWrapper } from './Pagination.styled';
 import P from 'react-pagimagic';
 import { Card, ListGroup, Button } from 'react-bootstrap';
-// XTA210990X2412023
+import CompareButton from '../CompareButton/Buttons';
+import CompareCars from '../Compare/CompareCars'; 
 
-const Pagination = (props) => {
-   const [showFull, setShowFull] = useState(false);
-   const [variantModel, setVariantModel] = useState(false);
+const Pagination = ({ listItem, variantCard }) => {
+  const [showFull, setShowFull] = useState(false);
+  const [variantModel, setVariantModel] = useState(false);
+  const [compareCar, setCompareCar] = useState([]);
+  const [showTable, setShowTable] = useState(false); 
 
-   const renderVariantCard = (variant) => {
-      variant === 'модель' ? setVariantModel(true) : setVariantModel(false);
-   }
+  useEffect(() => {
+    setCompareCar([]); 
+  }, [listItem]);
 
-   useEffect(() => {
-      renderVariantCard(props.variantCard);
-   }, [props.variantCard])
+  const renderVariantCard = (variant) => {
+    variant === 'модель' ? setVariantModel(true) : setVariantModel(false);
+  };
 
+  useEffect(() => {
+    renderVariantCard(variantCard);
+  }, [variantCard]);
 
-   const renderChildren = list => {
+  const handleCompare = (item) => {
+    if (compareCar.includes(item)) {
+      setCompareCar(compareCar.filter(car => car !== item));
+    } else if (compareCar.length < 2) {
+      setCompareCar([...compareCar, item]);
+    }
+  };
 
-      console.log("renderChildren", list);
-      return list.map((item, index) => {
+  const renderChildren = list => {
+    return list.map((item, index) => {
+      const handleToggle = () => {
+        setShowFull(!showFull);
+      };
 
-         const handleToggle = () => {
-            setShowFull(!showFull);
-         };
+      const fields = [
+        { label: "Номер", value: item.digits || "----------" },
+        { label: "VIN", value: item.vin || "**************" },
+        { label: "Реестрація", value: item.address || "--" },
+        { label: "Дата реестрації", value: item.registered_at || "-" },
+        { label: "Операція", value: item.operation?.ua || "--" },
+        { label: "Тип", value: item.kind?.ua || "--" },
+        { label: "Рік випуску", value: item?.model_year || "--" },
+        { label: "Колір", value: item.color?.ua || "--" },
+        { label: "Вид палива", value: item.fuel?.ua || "--" },
+        { label: "Об'ем двигуна", value: item.displacement || "---" },
+        { label: "Вага без навантаження", value: item.own_weight || "--" },
+        { label: "Максимальна вага", value: item.total_weight || "--" }
+      ];
 
-         const fields = [
-            { label: "Номер", value: item.digits || "----------" },
-            { label: "VIN", value: item.vin || "**************" },
-            { label: "Реестрація", value: item.address || "--" },
-            { label: "Дата реестрації", value: item.registered_at || "-" },
-            { label: "Операція", value: item.operation?.ua || "--" },
-            { label: "Тип", value: item.kind?.ua || "--" },
-            { label: "Рік випуску", value: item?.model_year || "--" },
-            { label: "Колір", value: item.color?.ua || "--" },
-            { label: "Вид палива", value: item.fuel?.ua || "--" },
-            { label: "Об'ем двигуна", value: item.displacement || "---" },
-            { label: "Вага без навантаження", value: item.own_weight || "--" },
-            { label: "Максимальна вага", value: item.total_weight || "--" }
-         ];
+      const fieldModel = [
+        { label: "Марка", value: item["full_title"] ? item["full_title"] : "--" },
+        { label: "Рік початку випуску", value: item.catalog_model?.year_from ? item.catalog_model.year_from : "---" },
+        { label: "Припинили випускати", value: item.catalog_model?.year_to ? item.catalog_model.year_to : "----" }
+      ];
 
-         const fieldModel = [
-            { label: "Марка", value: item["full_title"] ? item["full_title"] : "--" },
-            { label: "Рік початку випуску", value: item.catalog_model?.year_from ? item.catalog_model.year_from : "---" },
-            { label: "Припинили випускати", value: item.catalog_model?.year_to ? item.catalog_model.year_to : "----" }
-         ]
+      const styleCard = {
+        maxWidth: '30rem',
+        fontWeight: "600",
+        fontSize: "20px",
+      };
 
-         const styleCard = {
-            maxWidth: '30rem',
-            fontWeight: "600",
-            fontSize: "20px",
-         };
+      return (
+        <Card key={index} style={styleCard} className='border border-2 border-success mb-2'>
+          <Card.Img variant="top" src={variantModel ? item.catalog_model?.photo_url : item.photo_url} />
+          <Card.Body>
+            {variantModel ? (
+              <>
+                <Card.Title>{fieldModel[0].value}</Card.Title>
+                <Card.Text style={{ textAlign: "start" }}>
+                  <ListGroup variant="flush">
+                    {fieldModel.map((field, idx) => (
+                      <ListGroup.Item key={idx}>{field.label}: {field.value}</ListGroup.Item>
+                    ))}
+                  </ListGroup>
+                </Card.Text>
+              </>
+            ) : (
+              <>
+                <Card.Title>{item.vendor} {item.model}</Card.Title>
+                <Card.Text style={{ textAlign: "start" }}>
+                  <ListGroup variant="flush">
+                    {(showFull ? fields : fields.slice(0, 4)).map((field, idx) => (
+                      <ListGroup.Item key={idx}>{field.label}: {field.value}</ListGroup.Item>
+                    ))}
+                  </ListGroup>
+                </Card.Text>
+              </>
+            )}
+            <Button variant="success" onClick={handleToggle} style={{ color: "black", fontWeight: "600" }}>
+              {showFull ? "Приховати" : "Показати все"}
+            </Button>
+            <CompareButton
+              isCompared={compareCar.includes(item)}
+              handleCompare={() => handleCompare(item)}
+              item={item}
+              setShowTable={setShowTable}
+              compareCar={compareCar}
+            />
+          </Card.Body>
+        </Card>
+      );
+    });
+  };
 
-         if (variantModel) {
-            return (
-               <Card key={index} style={styleCard} className='border border-2 border-success mb-2'>
-                  <Card.Img variant="top" src={item.catalog_model?.photo_url} />
-                  <Card.Body >
-                     <Card.Title >{fieldModel[0].value}</Card.Title>
-                     <Card.Text style={{ textAlign: "start" }}>
-                        <ListGroup variant="flush">
-                           {fieldModel.map((field, idx) => (
-                              <ListGroup.Item key={idx} >{field.label}: {field.value}</ListGroup.Item>
-                           ))}
-                        </ListGroup>
-                     </Card.Text>
-                     <Button variant="primary" onClick={handleToggle} >
-                        {showFull ? "Приховати" : "Показати все"}
-                     </Button>
-                  </Card.Body>
-               </Card>
-            );
-         }
-         else {
-            return (
-               <Card key={index} style={styleCard} className='border border-2 border-success mb-2'>
-                  <Card.Img variant="top" src={item.photo_url} />
-                  <Card.Body>
-                     <Card.Title>{item.vendor} {item.model}</Card.Title>
-                     <Card.Text style={{ textAlign: "start" }}>
-                        <ListGroup variant="flush">
-                           {(showFull ? fields : fields.slice(0, 4)).map((field, idx) => (
-                              <ListGroup.Item key={idx}>{field.label}: {field.value}</ListGroup.Item>
-                           ))}
-                        </ListGroup>
-                     </Card.Text>
-                     <Button variant="success" onClick={handleToggle} style={{ color: "black", fontWeight: "600" }}>
-                        {showFull ? "Приховати" : "Показати все"}
-                     </Button>
-                  </Card.Body>
-               </Card>
-            );
-         }
-      });
-   };
+  const CURRENT_PAGE_INDEX = 0;
 
-   const CURRENT_PAGE_INDEX = 0;
-   return (
-      <PaginationWrapper style={{ fontFamily: 'sans-serif', textAlign: 'center' }}>
-         <P
-            list={props.listItem}
-            itemsPerPage={1}
-            currentPageIndex={CURRENT_PAGE_INDEX}
-            className="your-class-if-its-necessary"
-            maximumVisiblePaginators={6}
-            renderChildren={renderChildren}
-            useDefaultStyles
-         // showCounter
-         />
-      </PaginationWrapper>
-   );
-}
-Pagination.propTypes = {};
+  return (
+    <PaginationWrapper style={{ fontFamily: 'sans-serif', textAlign: 'center' }}>
+      <P
+        list={listItem}
+        itemsPerPage={1}
+        currentPageIndex={CURRENT_PAGE_INDEX}
+        className="your-class-if-its-necessary"
+        maximumVisiblePaginators={6}
+        renderChildren={renderChildren}
+        useDefaultStyles
+      />
+      {showTable && compareCar.length === 2 && (
+        <CompareCars compareCar={compareCar} setShowTable={setShowTable} />
+      )}
+    </PaginationWrapper>
+  );
+};
+
 export default Pagination;
