@@ -29,13 +29,14 @@ const SearchLine = ({ seterAuto = () => { }, seterTypeCard=()=>{} } ) => {
    const styled = {
       fontWeight: "600",
       fontSize: "20px",
-      border: "2px solid black"
+      border: "2px solid black",
+      backgroundColor:"yellow"
    };
    const styledSelect = { ...styled, maxWidth: "max-content" };
 
    return (
       <SearchLineWrapper >
-         <InputGroup className=" mt-3 mb-3 m-auto" style={{ width: "500px" }} >
+         <InputGroup className=" pt-3 mb-3 m-auto" style={{ width: "500px" }} >
             <Form.Control
                style={styled}
                value={inputValue}
@@ -54,7 +55,7 @@ const SearchLine = ({ seterAuto = () => { }, seterTypeCard=()=>{} } ) => {
                <option value="модель">Моделі</option>
                <option value="регіон">Регіон</option>
             </Form.Select>
-            <Button variant="outline-secondary" id="button-addon2" onClick={handleSearch} style={styled}>
+            <Button variant="light" id="button-addon2" onClick={handleSearch} style={{...styled}}>
                Пошук
             </Button>
          </InputGroup>
