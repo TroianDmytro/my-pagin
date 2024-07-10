@@ -9,7 +9,13 @@ const axiosData = async (item, typeOperation) => {
         url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`;
     }
     else if (typeOperation === "модель") {
-        const arrayModel = item.split(" ")
+        let arrayModel = item.trim().split(" ");
+        if(arrayModel.length > 2){
+            arrayModel = [arrayModel[0],(arrayModel.slice(1).join('-'))]
+            console.log("template arrr",arrayModel);
+        }
+
+        console.log("arrayModel",arrayModel);
         console.log(`https://baza-gai.com.ua/make/${arrayModel[0].toLowerCase()}/${arrayModel[1].toLowerCase()}`);
         url = `https://baza-gai.com.ua/make/${arrayModel[0].toLowerCase()}/${arrayModel[1].toLowerCase()}`;
     }
@@ -45,6 +51,7 @@ const axiosData = async (item, typeOperation) => {
         return data.operations // Возвращаем данные
 
     } catch (error) {
+        
         console.log("Axios Error");
         alert(`Error fetching data: ${error} `, error);
         return axiosData("KA0007XB","номер");
