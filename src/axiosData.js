@@ -45,9 +45,9 @@ const axiosData = async (item, typeOperation) => {
         return data.operations // Возвращаем данные
 
     } catch (error) {
-        alert(`Error fetching data:${error} `, error);
-        
-        return axiosData("KA0007XB","номер"); // В случае ошибки возвращаем null
+        console.log("Axios Error");
+        alert(`Error fetching data: ${error} `, error);
+        return axiosData("KA0007XB","номер");
     }
 }
 
