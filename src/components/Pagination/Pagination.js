@@ -53,16 +53,16 @@ const Pagination = (props) => {
             fontSize: "20px",
          };
 
-         if (variantModel) { 
+         if (variantModel) {
             return (
                <Card key={index} style={styleCard} className='border border-2 border-success mb-2'>
                   <Card.Img variant="top" src={item.catalog_model?.photo_url} />
                   <Card.Body >
                      <Card.Title >{fieldModel[0].value}</Card.Title>
-                     <Card.Text style={{ textAlign: "start"}}>
+                     <Card.Text style={{ textAlign: "start" }}>
                         <ListGroup variant="flush">
                            {fieldModel.map((field, idx) => (
-                              field.length > 0 && <ListGroup.Item key={idx} >{field.label}: {field.value}</ListGroup.Item>
+                              <ListGroup.Item key={idx} >{field.label}: {field.value}</ListGroup.Item>
                            ))}
                         </ListGroup>
                      </Card.Text>
@@ -75,22 +75,22 @@ const Pagination = (props) => {
          }
          else {
             return (
-            <Card key={index} style={styleCard} className='border border-2 border-success mb-2'>
-               <Card.Img variant="top" src={item.photo_url} />
-               <Card.Body>
-                  <Card.Title>{item.vendor} {item.model}</Card.Title>
-                  <Card.Text style={{ textAlign: "start" }}>
-                     <ListGroup variant="flush">
-                        {(showFull ? fields : fields.slice(0, 4)).map((field, idx) => (
-                           <ListGroup.Item key={idx}>{field.label}: {field.value}</ListGroup.Item>
-                        ))}
-                     </ListGroup>
-                  </Card.Text>
-                  <Button variant="success" onClick={handleToggle} style={{color:"black",fontWeight:"600"}}>
-                     {showFull ? "Приховати" : "Показати все"}
-                  </Button>
-               </Card.Body>
-            </Card>
+               <Card key={index} style={styleCard} className='border border-2 border-success mb-2'>
+                  <Card.Img variant="top" src={item.photo_url} />
+                  <Card.Body>
+                     <Card.Title>{item.vendor} {item.model}</Card.Title>
+                     <Card.Text style={{ textAlign: "start" }}>
+                        <ListGroup variant="flush">
+                           {(showFull ? fields : fields.slice(0, 4)).map((field, idx) => (
+                              <ListGroup.Item key={idx}>{field.label}: {field.value}</ListGroup.Item>
+                           ))}
+                        </ListGroup>
+                     </Card.Text>
+                     <Button variant="success" onClick={handleToggle} style={{ color: "black", fontWeight: "600" }}>
+                        {showFull ? "Приховати" : "Показати все"}
+                     </Button>
+                  </Card.Body>
+               </Card>
             );
          }
       });
@@ -99,16 +99,16 @@ const Pagination = (props) => {
    const CURRENT_PAGE_INDEX = 0;
    return (
       <PaginationWrapper style={{ fontFamily: 'sans-serif', textAlign: 'center' }}>
-            <P 
-               list={props.listItem}
-               itemsPerPage={1}
-               currentPageIndex={CURRENT_PAGE_INDEX}
-               className="your-class-if-its-necessary"
-               maximumVisiblePaginators={6}
-               renderChildren={renderChildren}
-               useDefaultStyles
-            // showCounter
-            />
+         <P
+            list={props.listItem}
+            itemsPerPage={1}
+            currentPageIndex={CURRENT_PAGE_INDEX}
+            className="your-class-if-its-necessary"
+            maximumVisiblePaginators={6}
+            renderChildren={renderChildren}
+            useDefaultStyles
+         // showCounter
+         />
       </PaginationWrapper>
    );
 }

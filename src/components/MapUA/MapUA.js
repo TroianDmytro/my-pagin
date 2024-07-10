@@ -11,6 +11,10 @@ const MapUA = (props) => {
 
    const styled = {
       width: "31rem",
+      position: "fixed",
+      bottom: "0",
+      left: "0",
+      margin: "2em",
       marginTop:"-25rem",
       marginLeft:"1em",
       border: "none",

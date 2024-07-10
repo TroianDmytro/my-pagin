@@ -27,7 +27,8 @@ const SearchLine = ({ seterAuto = () => { }, seterTypeCard=()=>{} } ) => {
    };
 
    const styled = {
-      fontWeight: "600",
+      fontFamily:"Arial",
+      fontWeight: "700",
       fontSize: "20px",
       border: "2px solid black",
       backgroundColor:"yellow"
