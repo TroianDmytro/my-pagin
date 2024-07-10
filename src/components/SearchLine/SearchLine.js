@@ -15,8 +15,9 @@ const SearchLine = ({title="Пошук", seter = () => { }, searchFunc = () => {
    const handleSearch = async () => {
       console.log('Input value:', inputValue);
       // Здесь можно добавить логику для поиска по введённому значению
-      const data = await searchFunc(inputValue);
-      seter(data);
+      // const data = await searchFunc(inputValue);
+      // seter(data);
+      seter(inputValue);
    };
 
    return (
