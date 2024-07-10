@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import { PaginationWrapper } from './Pagination.styled';
 import P from 'react-pagimagic';
 import { Card, ListGroup, Button } from 'react-bootstrap';
 import CompareButton from '../CompareButton/Buttons';
-import CompareCars from '../Compare/CompareCars'; 
+import Context from '../../Context';
 
-const Pagination = ({ listItem, variantCard }) => {
+const Pagination = () => {
   const [showFull, setShowFull] = useState(false);
-  const [variantModel, setVariantModel] = useState(false);
-  const [compareCar, setCompareCar] = useState([]);
-  const [showTable, setShowTable] = useState(false); 
+  const [variatModel, setVariantModel] = useState(false);
+
+  //всі useState з App.js
+  const ContextValueApp = useContext(Context);
 
   useEffect(() => {
-    setCompareCar([]); 
-  }, [listItem]);
+    ContextValueApp.setCompareCar([]);
+  }, []);
 
+  // перевіряе чи вид пошуку "модель", якщо так задае variatModel true.
   const renderVariantCard = (variant) => {
     variant === 'модель' ? setVariantModel(true) : setVariantModel(false);
   };
-
   useEffect(() => {
-    renderVariantCard(variantCard);
-  }, [variantCard]);
+    renderVariantCard(ContextValueApp.typeCard);
+  }, [ContextValueApp.typeCard]);
 
   const handleCompare = (item) => {
-    if (compareCar.includes(item)) {
-      setCompareCar(compareCar.filter(car => car !== item));
-    } else if (compareCar.length < 2) {
-      setCompareCar([...compareCar, item]);
+    if (ContextValueApp.compareCar.includes(item)) {
+      ContextValueApp.setCompareCar(ContextValueApp.compareCar.filter(car => car !== item));
+    } else if (ContextValueApp.compareCar.length < 2) {
+      ContextValueApp.setCompareCar([...ContextValueApp.compareCar, item]);
     }
   };
 
@@ -66,9 +67,9 @@ const Pagination = ({ listItem, variantCard }) => {
 
       return (
         <Card key={index} style={styleCard} className='border border-2 border-success mb-2'>
-          <Card.Img variant="top" src={variantModel ? item.catalog_model?.photo_url : item.photo_url} />
+          <Card.Img variant="top" src={variatModel ? item.catalog_model?.photo_url : item.photo_url} />
           <Card.Body>
-            {variantModel ? (
+            {variatModel ? (
               <>
                 <Card.Title>{fieldModel[0].value}</Card.Title>
                 <Card.Text style={{ textAlign: "start" }}>
@@ -79,27 +80,26 @@ const Pagination = ({ listItem, variantCard }) => {
                   </ListGroup>
                 </Card.Text>
               </>
-            ) : (
-              <>
-                <Card.Title>{item.vendor} {item.model}</Card.Title>
-                <Card.Text style={{ textAlign: "start" }}>
-                  <ListGroup variant="flush">
-                    {(showFull ? fields : fields.slice(0, 4)).map((field, idx) => (
-                      <ListGroup.Item key={idx}>{field.label}: {field.value}</ListGroup.Item>
-                    ))}
-                  </ListGroup>
-                </Card.Text>
-              </>
-            )}
+            ) :
+              (
+                <>
+                  <Card.Title>{item.vendor} {item.model}</Card.Title>
+                  <Card.Text style={{ textAlign: "start" }}>
+                    <ListGroup variant="flush">
+                      {(showFull ? fields : fields.slice(0, 4)).map((field, idx) => (
+                        <ListGroup.Item key={idx}>{field.label}: {field.value}</ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  </Card.Text>
+                </>
+              )}
             <Button variant="success" onClick={handleToggle} style={{ color: "black", fontWeight: "600" }}>
               {showFull ? "Приховати" : "Показати все"}
             </Button>
             <CompareButton
-              isCompared={compareCar.includes(item)}
+              isCompared={ContextValueApp.compareCar.includes(item)}
               handleCompare={() => handleCompare(item)}
               item={item}
-              setShowTable={setShowTable}
-              compareCar={compareCar}
             />
           </Card.Body>
         </Card>
@@ -112,7 +112,7 @@ const Pagination = ({ listItem, variantCard }) => {
   return (
     <PaginationWrapper style={{ fontFamily: 'sans-serif', textAlign: 'center' }}>
       <P
-        list={listItem}
+        list={ContextValueApp.auto}
         itemsPerPage={1}
         currentPageIndex={CURRENT_PAGE_INDEX}
         className="your-class-if-its-necessary"
@@ -120,9 +120,7 @@ const Pagination = ({ listItem, variantCard }) => {
         renderChildren={renderChildren}
         useDefaultStyles
       />
-      {showTable && compareCar.length === 2 && (
-        <CompareCars compareCar={compareCar} setShowTable={setShowTable} />
-      )}
+
     </PaginationWrapper>
   );
 };

@@ -2,17 +2,21 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axiosData from '../../axiosData';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SearchLineWrapper } from './SearchLine.styled';
+import Context from '../../Context';
 
-const SearchLine = ({ seterAuto = () => { }, seterTypeCard=()=>{} } ) => {
+const SearchLine = () => {
    const [inputValue, setInputValue] = useState('');
    const [typeSearch, setTypeSearch] = useState('номер');
+   
+   //всі useState з App.js
+   const myValue = useContext(Context);
 
    const handleSelect = (val) => {
       console.log("val", val.target.value)
       setTypeSearch(val.target.value);
-      seterTypeCard(val.target.value);
+      myValue.setTypeCard(val.target.value);
       console.log("typeSeach",val.target.value);
    }
 
@@ -23,7 +27,7 @@ const SearchLine = ({ seterAuto = () => { }, seterTypeCard=()=>{} } ) => {
    const handleSearch = async () => {
       console.log('Input value:', inputValue);
       const data = await axiosData(inputValue, typeSearch);
-      seterAuto(data);
+      myValue.setAuto(data);
    };
 
    const styled = {
