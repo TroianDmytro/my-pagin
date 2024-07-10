@@ -1,25 +1,24 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
-import axiosData from '../../axiosData';
 import React, { useContext, useState } from 'react';
 import { SearchLineWrapper } from './SearchLine.styled';
 import Context from '../../Context';
 
 
 const SearchLine = () => {
-   const [inputValue, setInputValue] = useState('');
-   const [typeSearch, setTypeSearch] = useState('номер');
-   
-   //всі useState з App.js
-   const myValue = useContext(Context);
+  const [inputValue, setInputValue] = useState('');
+  const [typeSearch, setTypeSearch] = useState('номер');
 
-   const handleSelect = (val) => {
-      console.log("val", val.target.value)
-      setTypeSearch(val.target.value);
-      myValue.setTypeCard(val.target.value);
-      console.log("typeSeach",val.target.value);
-   }
+  //всі useState з App.js
+  const myValue = useContext(Context);
+
+  const handleSelect = (val) => {
+    console.log("val", val.target.value)
+    setTypeSearch(val.target.value);
+    myValue.setTypeCard(val.target.value);
+    console.log("typeSeach", val.target.value);
+  }
 
 
   const handleInputChange = (event) => {
@@ -28,15 +27,8 @@ const SearchLine = () => {
 
 
   const handleSearchClick = async () => {
-    await handleSearch(inputValue, typeSearch);
+    await myValue.handleSearch(inputValue, typeSearch);
   };
-
-   const handleSearch = async () => {
-      console.log('Input value:', inputValue);
-      const data = await axiosData(inputValue, typeSearch);
-      myValue.setAuto(data);
-   };
-
 
   const styled = {
     fontFamily: "Arial",

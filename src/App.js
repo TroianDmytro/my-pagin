@@ -11,7 +11,7 @@ import Context from './Context';
 import AlertTableCompareCars from './components/AlertTableCompareCars/AlertTableCompareCars';
 
 // const SEARCH_LIMIT = 3; //проверка 
-const SEARCH_LIMIT = 100; 
+const SEARCH_LIMIT = 20; 
 const RESET_TIME = '00:00'; 
 
 
@@ -28,17 +28,7 @@ function App() {
   // TODO
   const [compareCar, setCompareCar] = useState([]);
 
-  //Об'ект який передается в useContext
-  const myValue = {
-    auto,
-    setAuto,
-    typeCard,
-    setTypeCard,
-    showTable,
-    setShowTable,
-    compareCar,
-    setCompareCar
-  }
+  
 
   useEffect(() => {
     const storedSearchCount = parseInt(localStorage.getItem('searchCount')) || 0;
@@ -109,6 +99,19 @@ function App() {
     }
   };
 
+
+  //Об'ект який передается в useContext
+  const myValue = {
+    auto,
+    setAuto,
+    typeCard,
+    setTypeCard,
+    showTable,
+    setShowTable,
+    compareCar,
+    setCompareCar,
+    handleSearch
+  }
   return (
     <div className='App'>
       {donationScene ? (

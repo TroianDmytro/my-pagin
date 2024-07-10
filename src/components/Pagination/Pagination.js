@@ -38,6 +38,7 @@ const Pagination = () => {
         setShowFull(!showFull);
       };
 
+      //набір полів для картки якщо  variatModel !== "модель"
       const fields = [
         { label: "Номер", value: item.digits || "----------" },
         { label: "VIN", value: item.vin || "**************" },
@@ -53,10 +54,13 @@ const Pagination = () => {
         { label: "Максимальна вага", value: item.total_weight || "--" }
       ];
 
+      //набір полів для картки якщо  variatModel === "модель"
       const fieldModel = [
         { label: "Марка", value: item["full_title"] ? item["full_title"] : "--" },
         { label: "Рік початку випуску", value: item.catalog_model?.year_from ? item.catalog_model.year_from : "---" },
-        { label: "Припинили випускати", value: item.catalog_model?.year_to ? item.catalog_model.year_to : "----" }
+        { label: "Припинили випускати", value: item.catalog_model?.year_to ? item.catalog_model.year_to : "----" },
+        { label: "Mінімальна ціна", value: item.catalog_model?.price_min ? `${item.catalog_model.price_min} грн`: "----" },
+        { label: "Максимальна ціна", value: item.catalog_model?.price_max  ? `${item.catalog_model.price_max} грн`  : "----" }
       ];
 
       const styleCard = {
