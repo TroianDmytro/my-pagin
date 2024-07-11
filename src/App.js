@@ -3,18 +3,42 @@ import Pagination from './components/Pagination/Pagination';
 import { useState, useEffect } from 'react';
 import SearchLine from './components/SearchLine/SearchLine';
 import MapUA from './components/MapUA/MapUA';
+
 import DonationScene from './components/Donation/DonationScen';
 import axiosData from './axiosData';
+import IconCompare from './components/IconCompare/IconCompare';
+import Context from './Context';
+import AlertTableCompareCars from './components/AlertTableCompareCars/AlertTableCompareCars';
 
 // const SEARCH_LIMIT = 3; //проверка 
 const SEARCH_LIMIT = 100; 
 const RESET_TIME = '00:00'; 
 
+
 function App() {
+  //масив обьектів який повертается з серверу
   const [auto, setAuto] = useState([]);
-  const [typeCard, setTypeCard] = useState("номер");
+
   const [searchCount, setSearchCount] = useState(0);
   const [donationScene, setDonationScene] = useState(false);
+ //тип картки яка буде видображатись(залежить від вибору в select)
+  const [typeCard, setTypeCard] = useState("номер");
+  //показувати таблицю порівняння чи ні
+  const [showTable, setShowTable] = useState(false);
+  // TODO
+  const [compareCar, setCompareCar] = useState([]);
+
+  //Об'ект який передается в useContext
+  const myValue = {
+    auto,
+    setAuto,
+    typeCard,
+    setTypeCard,
+    showTable,
+    setShowTable,
+    compareCar,
+    setCompareCar
+  }
 
   useEffect(() => {
     const storedSearchCount = parseInt(localStorage.getItem('searchCount')) || 0;
@@ -91,9 +115,13 @@ function App() {
         <DonationScene />
       ) : (
         <>
-          <SearchLine seterAuto={setAuto} seterTypeCard={setTypeCard} handleSearch={handleSearch} />
-          <Pagination listItem={auto} variantCard={typeCard} />
+         <Context.Provider value={myValue}>
+          <IconCompare />
+          <SearchLine />
+          <AlertTableCompareCars />
+          <Pagination />
           <MapUA region={auto[0]?.region} />
+        </Context.Provider>
         </>
       )}
     </div>
