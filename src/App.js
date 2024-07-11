@@ -3,10 +3,9 @@ import Pagination from './components/Pagination/Pagination';
 import { useState } from 'react';
 import SearchLine from './components/SearchLine/SearchLine';
 import MapUA from './components/MapUA/MapUA';
-import TableCompareCars from './components/TableCompare/TableCompareCars';
 import IconCompare from './components/IconCompare/IconCompare';
-import { Alert } from 'react-bootstrap';
 import Context from './Context';
+import AlertTableCompareCars from './components/AlertTableCompareCars/AlertTableCompareCars';
 
 function App() {
   //масив обьектів який повертается з серверу
@@ -35,16 +34,7 @@ function App() {
       <Context.Provider value={myValue}>
         <IconCompare />
         <SearchLine />
-        <Alert show={showTable} variant='primary'
-          style={{
-            position: 'absolute',
-            zIndex: "100",
-            left: '50%',
-            top: '50%',
-            transform: 'translate(-50%, -50%)'
-          }}>
-          <TableCompareCars />
-        </Alert>
+        <AlertTableCompareCars />
         <Pagination />
         <MapUA region={auto[0]?.region} />
       </Context.Provider>
