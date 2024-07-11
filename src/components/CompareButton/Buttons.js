@@ -20,6 +20,7 @@ const CompareButton = ({ isCompared, handleCompare, item}) => {
     <div style={styledBtn}>
       {isCompared ? (
         <Button
+          style={{color:'black', fontWeight: 'bold', minWidth: '200px'}}
           variant="danger"
           onClick={removeFromComparison}
           className='mt-2'
@@ -28,6 +29,7 @@ const CompareButton = ({ isCompared, handleCompare, item}) => {
         </Button>
       ) : (
         <Button
+          style={{color:'black', fontWeight: 'bold'}}
           variant="success"
           onClick={() => handleCompare(item)}
           className='mt-2'
@@ -35,7 +37,7 @@ const CompareButton = ({ isCompared, handleCompare, item}) => {
           Додати в порівняти
         </Button>
       )}
-      
+
     </div>
   );
 };
