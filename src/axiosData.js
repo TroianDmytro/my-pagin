@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const axiosData = async (item, typeOperation) => {
+    console.log("item",item);
     let url = '';
     if (typeOperation === "номер") {
         url = `https://baza-gai.com.ua/nomer/${item.toUpperCase()}`;
@@ -8,8 +9,14 @@ const axiosData = async (item, typeOperation) => {
     else if (typeOperation === "vin") {
         url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`;
     }
-    else if (typeOperation === "модель") {
-        const arrayModel = item.split(" ")
+    else if (typeOperation === "модель" && item) {
+        let arrayModel = item.trim().split(" ");
+        if(arrayModel.length > 2){
+            arrayModel = [arrayModel[0],(arrayModel.slice(1).join('-'))]
+            console.log("template arrr",arrayModel);
+        }
+
+        console.log("arrayModel",arrayModel);
         console.log(`https://baza-gai.com.ua/make/${arrayModel[0].toLowerCase()}/${arrayModel[1].toLowerCase()}`);
         url = `https://baza-gai.com.ua/make/${arrayModel[0].toLowerCase()}/${arrayModel[1].toLowerCase()}`;
     }
@@ -18,7 +25,7 @@ const axiosData = async (item, typeOperation) => {
     }
 
 
-    const key = "b58b989505dc6b035c5ee1739a12f057";
+    const key = "c9fac9bee7ec8ba2f26a932d75d7c814";
     try {
         const response = await axios.get(url, {
             headers: {
@@ -45,9 +52,10 @@ const axiosData = async (item, typeOperation) => {
         return data.operations // Возвращаем данные
 
     } catch (error) {
-        alert(`Error fetching data:${error} `, error);
         
-        return axiosData("KA0007XB","номер"); // В случае ошибки возвращаем null
+        console.log("Axios Error");
+        alert(`Error fetching data: ${error} `, error);
+        return axiosData("KA0007XB","номер");
     }
 }
 
