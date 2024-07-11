@@ -3,7 +3,7 @@ import Pagination from './components/Pagination/Pagination';
 import { useState } from 'react';
 import SearchLine from './components/SearchLine/SearchLine';
 import MapUA from './components/MapUA/MapUA';
-import TableCompareCars from './components/Compare/TableCompareCars';
+import TableCompareCars from './components/TableCompare/TableCompareCars';
 import IconCompare from './components/IconCompare/IconCompare';
 import { Alert } from 'react-bootstrap';
 import Context from './Context';

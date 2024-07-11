@@ -2,9 +2,11 @@ import styled from 'styled-components';
 
 //стиль кнопки порівняння
 export const IconCompareWrapper = styled.div`
+    
     position: absolute;
     right: 2em;
     top:1em;
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,5 +21,8 @@ export const IconCompareWrapper = styled.div`
         border: 2px solid blue;
     }
 `;
-   
-      
+
+export const IconCompareStyle = styled.img`
+    width: 20px;
+    height: 20px;
+`;

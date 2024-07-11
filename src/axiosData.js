@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const axiosData = async (item, typeOperation) => {
+    console.log("item",item);
     let url = '';
     if (typeOperation === "номер") {
         url = `https://baza-gai.com.ua/nomer/${item.toUpperCase()}`;
@@ -8,7 +9,7 @@ const axiosData = async (item, typeOperation) => {
     else if (typeOperation === "vin") {
         url = `https://baza-gai.com.ua/vin/${item.toUpperCase()}`;
     }
-    else if (typeOperation === "модель") {
+    else if (typeOperation === "модель" && item) {
         let arrayModel = item.trim().split(" ");
         if(arrayModel.length > 2){
             arrayModel = [arrayModel[0],(arrayModel.slice(1).join('-'))]

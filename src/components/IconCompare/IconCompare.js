@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { IconCompareWrapper } from './IconCompare.styled';
+import { IconCompareStyle, IconCompareWrapper } from './IconCompare.styled';
 import scales from '../images/scales.png';
 import Context from '../../Context';
 
@@ -15,14 +15,9 @@ const IconCompare = () => {
    }
 
    return (<IconCompareWrapper onClick={()=>handleClick(myValue.showTable)} >
-      <img
+      <IconCompareStyle
          src={scales}
          alt="scales"
-         style={{
-            width: '20px',
-            height: '20px'
-
-         }}
       />
    </IconCompareWrapper>
    );
