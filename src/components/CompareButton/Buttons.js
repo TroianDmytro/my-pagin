@@ -1,14 +1,23 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import scales from '../images/scales.png';
+// import styled from 'styled-components';
 
-const CompareButton = ({ isCompared, handleCompare, item, setShowTable, compareCar }) => {
+const CompareButton = ({ isCompared, handleCompare, item}) => {
   const removeFromComparison = () => {
     handleCompare(item);
   };
 
+  // стиль кнопки додати в порiвняння
+  const styledBtn = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: '10px'
+  };
+ 
+
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+    <div style={styledBtn}>
       {isCompared ? (
         <Button
           style={{color:'black', fontWeight: 'bold', minWidth: '200px'}}
@@ -25,17 +34,10 @@ const CompareButton = ({ isCompared, handleCompare, item, setShowTable, compareC
           onClick={() => handleCompare(item)}
           className='mt-2'
         >
-          Порівняти
+          Додати в порівняти
         </Button>
       )}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '40px', height: '40px', borderRadius: '50%', border: '1px solid gray', marginLeft: '10px', flexShrink: 0 }}>
-        <img
-          src={scales}
-          style={{ width: '20px', height: '20px', flexShrink: 0}}
-          onClick={() => setShowTable(compareCar.length === 2)}
-          alt="scales"
-        />
-      </div>
+
     </div>
   );
 };
