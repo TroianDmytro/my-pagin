@@ -11,6 +11,7 @@ const CompareButton = ({ isCompared, handleCompare, item, setShowTable, compareC
     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
       {isCompared ? (
         <Button
+          style={{color:'black', fontWeight: 'bold', minWidth: '200px'}}
           variant="danger"
           onClick={removeFromComparison}
           className='mt-2'
@@ -19,6 +20,7 @@ const CompareButton = ({ isCompared, handleCompare, item, setShowTable, compareC
         </Button>
       ) : (
         <Button
+          style={{color:'black', fontWeight: 'bold'}}
           variant="success"
           onClick={() => handleCompare(item)}
           className='mt-2'
@@ -26,10 +28,10 @@ const CompareButton = ({ isCompared, handleCompare, item, setShowTable, compareC
           Порівняти
         </Button>
       )}
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '40px', height: '40px', borderRadius: '50%', border: '1px solid gray', marginLeft: '10px' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '40px', height: '40px', borderRadius: '50%', border: '1px solid gray', marginLeft: '10px', flexShrink: 0 }}>
         <img
           src={scales}
-          style={{ width: '20px', height: '20px', cursor: 'pointer' }}
+          style={{ width: '20px', height: '20px', flexShrink: 0}}
           onClick={() => setShowTable(compareCar.length === 2)}
           alt="scales"
         />

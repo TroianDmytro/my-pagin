@@ -4,7 +4,7 @@ import alarm from '../images/alarm2.jpg'
 
 const DonationScene = () => {
   return (
-    <Container className="text-center mt-5">
+    <Container className="text-center mt-5" style={{color: 'white'}}>
       <p>Ты достиг лимита поиска в 100 автомобилей за день.</p>
       <p>Донатик закинь, ухилянт</p>
       <h3>↓</h3>
