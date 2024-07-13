@@ -29,12 +29,12 @@ const CompareButton = ({ isCompared, handleCompare, item}) => {
         </Button>
       ) : (
         <Button
-          style={{color:'black', fontWeight: 'bold'}}
+          style={{color:'black', fontWeight: 'bold', minWidth: '212px'}}
           variant="success"
           onClick={() => handleCompare(item)}
           className='mt-2'
         >
-          Додати в порівняти
+          Додати в порівняння
         </Button>
       )}
 

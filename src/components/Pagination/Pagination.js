@@ -1,15 +1,16 @@
-import React, { useEffect, useState,useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { PaginationWrapper } from './Pagination.styled';
 import P from 'react-pagimagic';
 import { Card, ListGroup, Button } from 'react-bootstrap';
 import CompareButton from '../CompareButton/Buttons';
+import DeleteButton from '../DeleteCompareBtn/DeleteButton'; 
 import Context from '../../Context';
 
 const Pagination = () => {
   const [showFull, setShowFull] = useState(false);
   const [variatModel, setVariantModel] = useState(false);
 
-  //всі useState з App.js
+  // всі useState з App.js
   const ContextValueApp = useContext(Context);
 
   useEffect(() => {
@@ -100,7 +101,9 @@ const Pagination = () => {
               isCompared={ContextValueApp.compareCar.includes(item)}
               handleCompare={() => handleCompare(item)}
               item={item}
+              
             />
+            <DeleteButton/> 
           </Card.Body>
         </Card>
       );
@@ -120,7 +123,6 @@ const Pagination = () => {
         renderChildren={renderChildren}
         useDefaultStyles
       />
-
     </PaginationWrapper>
   );
 };
